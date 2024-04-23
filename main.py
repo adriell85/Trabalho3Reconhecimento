@@ -227,8 +227,8 @@ def plotDecisionSurface(xtrain,ytrain,classifierName,i,datasetName):
             Z = DMC(xtrainSelected, ytrain, matrix)
         else:
             model = NaiveBayesClassifier()
-            model.fit(xtrainSelected,ytrain,datasetName)
-            Z = model.predict(matrix)
+            model.fit(xtrainSelected,ytrain,datasetName,False,i)
+            Z = model.predict(matrix,datasetName,i)
         Z = np.array(Z)
         Z = Z.reshape(xx.shape)
         fig, ax = plt.subplots()
@@ -365,8 +365,8 @@ def NayveBayesRuns(base):
             print('\nIteração {}\n'.format(i))
             xtrain, ytrain, xtest, ytest = datasetSplitTrainTest(x, y, 80,'Naive Bayes Gaussian',convertDocName[base])
             model = NaiveBayesClassifier()
-            model.fit(xtrain, ytrain,convertDocName[base])
-            ypredict = model.predict(xtest)
+            model.fit(xtrain, ytrain,convertDocName[base],True,i)
+            ypredict = model.predict(xtest,convertDocName[base],i)
             confMatrix = confusionMatrix(ytest, ypredict)
             print('Confusion Matrix:\n', confMatrix)
             plotConfusionMatrix(confMatrix,originalLabels,'Naive',i,convertDocName[base])
@@ -374,7 +374,7 @@ def NayveBayesRuns(base):
             print('ACC:', accuracy)
             arquivo.write("ACC: {}\n".format(accuracy))
             arquivo.write("Confusion Matrix: \n {} \n\n".format(confMatrix))
-            accuracyList.append(i)
+            accuracyList.append(accuracy)
             plotDecisionSurface(xtrain, ytrain,'Naive',i,convertDocName[base])
         print('\nAcurácia média das 20 iterações: {:.2f} ± {:.2f}'.format(np.mean(accuracyList), np.std(accuracyList)))
         arquivo.write(
@@ -382,11 +382,11 @@ def NayveBayesRuns(base):
 
 
 if __name__ =='__main__':
-    # NayveBayesRuns(1)
+    NayveBayesRuns(1)
     # NayveBayesRuns(2)
     # NayveBayesRuns(0)
     # NayveBayesRuns(4)
-    DMCRuns(0)
+    # DMCRuns(0)
     # DMCRuns(1)
     # DMCRuns(2)
     # DMCRuns(3)
