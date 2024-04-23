@@ -175,7 +175,6 @@ def dispersionDataBlindClass(data, datasetName,iteration,isTrainingData):
     axs = axs.ravel()  # Transforma o array multidimensional em 1D para facilitar o acesso
 
 
-    print(data)
     for i, (idx1, idx2) in enumerate(atributesCombination):
         x = [row[idx1] for row in data]
         y = [row[idx2] for row in data]
