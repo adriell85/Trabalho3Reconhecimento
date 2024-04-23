@@ -1,122 +1,6 @@
-from scipy.stats import multivariate_normal
 import numpy as np
 import matplotlib.pyplot as plt
-
-
-def plotGaussianDistribution(means, covariances, classes, featureIndices=(0, 1), gridRange=(-3, 3), resolution=0.1):
-
-    f1, f2 = featureIndices
-    x, y = np.mgrid[gridRange[0]:gridRange[1]:resolution, gridRange[0]:gridRange[1]:resolution]
-    pos = np.dstack((x, y))
-
-    fig, ax = plt.subplots()
-
-    for i, c in enumerate(classes):
-        mean = means[i][[f1, f2]]
-        covariance = covariances[i][[f1, f2], [f1, f2]]
-        rv = multivariate_normal(mean, covariance)
-        ax.contourf(x, y, rv.pdf(pos), levels=100, cmap='Blues', alpha=0.5)
-        ax.set_title(f'Multivariate Gaussian Distribution - Features {f1} and {f2}')
-        ax.set_xlabel(f'Feature {f1}')
-        ax.set_ylabel(f'Feature {f2}')
-
-    plt.show()
-
-def regularizeCovariance(covariance, alpha=1e-5):
-
-    regularizedCovariance = covariance + alpha * np.eye(covariance.shape[0])
-    return regularizedCovariance
-
-def plotGaussianDistribution3d(baseName,iteration,means, covariances, classes, featureIndices=(0, 1), gridRange=(-0.3, 0.3), resolution=0.1):
-
-    atributesCombination3Features = [
-        [0, 1],
-        [0, 2],
-        [0, 3],
-        [1, 2],
-        [1, 3],
-        [2, 3]
-    ]
-    atributesCombination5Features = [
-        [0, 1],
-        [0, 2],
-        [0, 3],
-        [0, 4],
-        [0, 5],
-        [1, 2],
-        [1, 3],
-        [1, 4],
-        [1, 5],
-        [2, 3],
-        [2, 4],
-        [2, 5],
-        [3, 4],
-        [3, 5],
-        [4, 5]
-    ]
-    for ind in atributesCombination3Features:
-        f1, f2 = ind
-        x, y = np.mgrid[gridRange[0]:gridRange[1]:resolution, gridRange[0]:gridRange[1]:resolution]
-        pos = np.dstack((x, y))
-
-        fig2 = plt.figure()
-
-
-        for i, c in enumerate(classes):
-            ax = fig2.add_subplot(111, projection='3d')
-            mean = means[i][[f1, f2]]
-            covariance = covariances[i][[f1, f2], [f1, f2]]
-
-            rv = multivariate_normal(mean=mean, cov=covariance, allow_singular=True)
-            z = rv.pdf(pos)
-
-            ax.plot_surface(x, y, z, cmap='cividis', edgecolor='none', alpha=0.5)
-            ax.set_title(f'Multivariate Gaussian Distribution - Features {f1} and {f2} base {baseName}')
-            ax.set_xlabel(f'Feature {f1}')
-            ax.set_ylabel(f'Feature {f2}')
-            ax.set_zlabel('Probability')
-            plt.savefig('Resultados_Naive/{}/Gaussiana_Base_{}_features_{}_classe_{}_iteracao_{}.png'.format(baseName,baseName,ind,i,iteration))
-
-        # plt.show()
-
-
-
-# def naiveBayesGaussianMultivar(xTrain, yTrain, xTest,baseName):
-#     xTrain = np.array(xTrain)
-#     yTrain = np.array(yTrain)
-#     xTest = np.array(xTest)
-#     classes = np.unique(yTrain)
-#     nClasses = len(classes)
-#     nFeatures = xTrain.shape[1]
-#     priors = np.zeros(nClasses)
-#     means = np.zeros((nClasses, nFeatures))
-#     covariances = np.zeros((nClasses, nFeatures, nFeatures))
-#
-#     for i, c in enumerate(classes):
-#         xC = xTrain[yTrain == c]
-#         priors[i] = xC.shape[0] / xTrain.shape[0]
-#         means[i] = np.mean(xC, axis=0)
-#         covariances[i] = np.cov(xC, rowvar=False)+ np.eye(nFeatures) * 1e-4
-#
-#
-#     plotGaussianDistribution3d(baseName, means, covariances, classes, featureIndices=(1, 2))
-#     def multivariateGaussianPdf(x, mean, covariance):
-#         detCov = np.linalg.det(covariance)
-#         invCov = np.linalg.inv(covariance)
-#         numerator = np.exp(-0.5 * (x - mean) @ invCov @ (x - mean).T)
-#         denominator = np.sqrt((2 * np.pi) ** nFeatures * detCov)
-#         return numerator / denominator
-#
-#     def classify(x):
-#         posteriors = np.zeros(nClasses)
-#         for i in range(nClasses):
-#             likelihood = multivariateGaussianPdf(x, means[i], covariances[i])
-#             posteriors[i] = likelihood * priors[i]
-#         return classes[np.argmax(posteriors)]
-#
-#     predictions = np.array([classify(x) for x in xTest])
-#
-#     return predictions
+from plots import plotGaussianDistribution3d
 
 class NaiveBayesClassifier:
     def fit(self, xtrain, ytrain,baseName,runTrain,iteration):
@@ -124,25 +8,26 @@ class NaiveBayesClassifier:
         nSamples,nFeatures = xtrain.shape
         self.classes = np.unique(ytrain)
         nClasses = len(self.classes)
-        covariances = np.zeros((nClasses, nFeatures, nFeatures))
-        # print('xtrain',xtrain)
+
 
         self.mean = []
         self.variance = []
         self.priorProb = []
+        self.covariance = []
 
-        for _class in self.classes:
-            _classSamples = xtrain[ytrain==_class]
+        for _class,c in enumerate(self.classes):
+            _classSamples = xtrain[ytrain==c]
             self.mean.append(np.mean(_classSamples,axis=0))
             self.variance.append(np.var(_classSamples,axis=0))
             self.priorProb.append(_classSamples.shape[0]/nSamples)
-            covariances[_class] = np.cov(_classSamples, rowvar=False) + np.eye(nFeatures) * 1e-4
+            self.covariance.append(np.cov(_classSamples, rowvar=False) + np.eye(nFeatures) * 1e-4)
         self.mean=np.array(self.mean)
         self.variance=np.array(self.variance)
         self.priorProb=np.array(self.priorProb)
+        self.covariance = np.array(self.covariance)
 
         if(runTrain):
-            plotGaussianDistribution3d(baseName, iteration,self.mean, covariances, self.classes, featureIndices=(1, 2))
+            plotGaussianDistribution3d(baseName, iteration,self.mean, self.covariance, self.classes, featureIndices=(1, 2))
             fileName = "DadosGaussiana/Dados_Plotagem_Gaussiana{}_base_{}_iteracao_{}.txt".format(baseName,baseName,iteration)
             with open(fileName, 'w') as arquivo:
                 arquivo.write("Dados de Treino.\n\n{}\n".format(xtrain))
@@ -151,12 +36,9 @@ class NaiveBayesClassifier:
         fileName = "DadosGaussiana/Dados_Plotagem_Gaussiana{}_base_{}_iteracao_{}.txt".format(baseName,baseName,iteration)
         with open(fileName, 'a') as arquivo:
             arquivo.write("Dados de Teste.\n\n{}\n".format(xtest))
-
-        # ypredicted = precit
         predicts=[]
         for xsample in xtest:
             posteriorsPros = []
-            # print(self.classes)
             for i,c in enumerate(self.classes):
                 priorprobability = np.log(self.priorProb[i])
                 conditionalClass = np.sum(np.log(self._pdf(i,xsample)))
