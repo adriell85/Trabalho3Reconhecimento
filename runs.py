@@ -1,7 +1,7 @@
 import numpy as np
 from KNN import KNN
 from DMC import DMC
-from NaiveBayesClassifier import NaiveBayesClassifier
+
 from openDatasets import openIrisDataset, openDermatologyDataset,openBreastDataset,openColumnDataset,openArtificialDataset,datasetSplitTrainTest
 from plots import confusionMatrix, plotConfusionMatrix,plotDecisionSurface
 
@@ -28,7 +28,7 @@ def KNNRuns(base):
     originalLabels = out[2]
     accuracyList = []
 
-    fileName = "KNNRuns_{}.txt".format(convertDocName[base])
+    fileName = "DadosRuns/KNNRuns_{}.txt".format(convertDocName[base])
     with open(fileName, 'w') as arquivo:
         arquivo.write("Execução Iterações KNN {}.\n\n".format(convertDocName[base]))
         for i in range(20):
@@ -72,7 +72,7 @@ def DMCRuns(base):
     originalLabels = out[2]
     accuracyList = []
 
-    fileName = "DMCRuns_{}.txt".format(convertDocName[base])
+    fileName = "DadosRuns/DMCRuns_{}.txt".format(convertDocName[base])
     with open(fileName, 'w') as arquivo:
         arquivo.write("Execução Iterações DMC.\n\n")
         for i in range(20):
@@ -94,6 +94,7 @@ def DMCRuns(base):
 
 
 def NayveBayesRuns(base):
+    from NaiveBayes import NaiveBayesClassifier
     convertRun = {
         0: openIrisDataset(),
         1: openColumnDataset(),
@@ -115,7 +116,7 @@ def NayveBayesRuns(base):
     y = out[1]
     originalLabels = out[2]
     accuracyList = []
-    fileName = "NaiveRuns_{}.txt".format(convertDocName[base])
+    fileName = "DadosRuns/NaiveRuns_{}.txt".format(convertDocName[base])
     with open(fileName, 'w') as arquivo:
         arquivo.write("Execução Iterações Naive {}.\n\n".format(convertDocName[base]))
         for i in range(20):
