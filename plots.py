@@ -79,7 +79,7 @@ def plotDecisionSurface(xtrain,ytrain,classifierName,i,datasetName):
         else:
             model = NaiveBayesClassifier()
             model.fit(xtrainSelected,ytrain,datasetName,False,i)
-            Z = model.predict(matrix,datasetName,i)
+            Z = model.predict(matrix,datasetName,i,True)
         Z = np.array(Z)
         Z = Z.reshape(xx.shape)
         fig, ax = plt.subplots()

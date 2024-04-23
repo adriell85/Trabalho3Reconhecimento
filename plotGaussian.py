@@ -97,13 +97,13 @@ def dispersionDataByClass(data, datasetName,iteration,classIndex):
         [4, 5]
     ]
     color_map = {
-        0: "red",  # Vermelho
-        1: "blue",  # Azul
-        2: "green",  # Verde
-        3: "yellow",  # Amarelo
-        4: "purple",  # Roxo
-        5: "orange",  # Laranja
-        6: "black"  # Preto
+        0: "red",
+        1: "blue",
+        2: "green",
+        3: "yellow",
+        4: "purple",
+        5: "orange",
+        6: "black"
     }
     if datasetName == 'Iris':
         atributesCombination = atributesCombinationIris
@@ -112,13 +112,12 @@ def dispersionDataByClass(data, datasetName,iteration,classIndex):
     else:
         atributesCombination = atributesCombinationFree
 
-    # Determina o número de linhas e colunas para os subplots
     num_plots = len(atributesCombination)
-    cols = 3  # Máximo de 3 gráficos por linha
-    rows = (num_plots + cols - 1) // cols  # Calcula o número necessário de linhas
+    cols = 3
+    rows = (num_plots + cols - 1) // cols
 
     fig, axs = plt.subplots(rows, cols, figsize=(5 * cols, 4 * rows))
-    axs = axs.ravel()  # Transforma o array multidimensional em 1D para facilitar o acesso
+    axs = axs.ravel()
 
 
 
@@ -130,7 +129,6 @@ def dispersionDataByClass(data, datasetName,iteration,classIndex):
         axs[i].set_ylabel(f'Atributo {idx2}')
         axs[i].set_title(f'Atributo {idx1} e Atributo {idx2}')
 
-    # Esconder subplots extras que não estão em uso
     for j in range(i + 1, rows * cols):
         fig.delaxes(axs[j])
 
@@ -168,16 +166,16 @@ def dispersionDataBlindClass(data, datasetName,iteration,isTrainingData):
     else:
         atributesCombination = atributesCombinationFree
 
-    # Determina o número de linhas e colunas para os subplots
+
     num_plots = len(atributesCombination)
-    cols = 3  # Máximo de 3 gráficos por linha
-    rows = (num_plots + cols - 1) // cols  # Calcula o número necessário de linhas
+    cols = 3
+    rows = (num_plots + cols - 1) // cols
 
     fig, axs = plt.subplots(rows, cols, figsize=(5 * cols, 4 * rows))
     axs = axs.ravel()  # Transforma o array multidimensional em 1D para facilitar o acesso
 
 
-
+    print(data)
     for i, (idx1, idx2) in enumerate(atributesCombination):
         x = [row[idx1] for row in data]
         y = [row[idx2] for row in data]

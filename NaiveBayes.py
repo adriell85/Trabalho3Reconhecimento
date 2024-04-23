@@ -6,7 +6,6 @@ class NaiveBayesClassifier:
         xtrain = np.array(xtrain)
         nSamples,nFeatures = xtrain.shape
         self.classes = np.unique(ytrain)
-        nClasses = len(self.classes)
 
 
         self.mean = []
@@ -18,7 +17,8 @@ class NaiveBayesClassifier:
 
         for _class,c in enumerate(self.classes):
             _classSamples = xtrain[ytrain==c]
-            dispersionDataByClass(_classSamples, baseName, iteration,c)
+            if (isruningTrain):
+                dispersionDataByClass(_classSamples, baseName, iteration,c)
             self.mean.append(np.mean(_classSamples,axis=0))
             self.variance.append(np.var(_classSamples,axis=0))
             self.priorProb.append(_classSamples.shape[0]/nSamples)
@@ -35,21 +35,30 @@ class NaiveBayesClassifier:
             with open(fileName, 'w') as arquivo:
                 arquivo.write("Dados de Treino.\n\n{}\n".format(xtrain))
 
-    def predict(self,xtest,baseName,iteration):
-        dispersionDataBlindClass(xtest, baseName, iteration,False)
+    def predict(self,xtest,baseName,iteration,isRuningZ):
+        if(isRuningZ==False):
+            dispersionDataBlindClass(xtest, baseName, iteration,False)
         fileName = "DadosGaussiana/Dados_Plotagem_Gaussiana{}_base_{}_iteracao_{}.txt".format(baseName,baseName,iteration)
         with open(fileName, 'a') as arquivo:
             arquivo.write("Dados de Teste.\n\n{}\n".format(xtest))
-        predicts=[]
-        for xsample in xtest:
-            posteriorsPros = []
-            for i,c in enumerate(self.classes):
-                priorprobability = np.log(self.priorProb[i])
-                conditionalClass = np.sum(np.log(self._pdf(i,xsample)))
-                posteriorProbability = priorprobability + conditionalClass
-                posteriorsPros.append(posteriorProbability)
-            predicts.append(np.argmax(posteriorsPros))
-        return np.array(predicts)
+            arquivo.write('\nIteração: {} :::::::::::::::::\n'.format(iteration))
+            predicts=[]
+            count=0
+            for xsample in xtest:
+                posteriorsPros = []
+                arquivo.write("\nAmostra {}::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n".format(count))
+                count+=1
+                for i,c in enumerate(self.classes):
+                    priorprobability = np.log(self.priorProb[i])
+                    conditionalClass = np.sum(np.log(self._pdf(i,xsample)))
+                    posteriorProbability = priorprobability + conditionalClass
+                    posteriorsPros.append(posteriorProbability)
+                    arquivo.write("\nClasse {}\n".format(c))
+                    arquivo.write("Probabilidade a priori: {:.4f}\n".format(np.exp(priorprobability)))
+                    arquivo.write("Verossimilhança: {:.4f}\n".format(np.exp(conditionalClass)))
+                    arquivo.write("Probabilidade a posteriori: {:.4f}\n".format(np.exp(posteriorProbability)))
+                predicts.append(np.argmax(posteriorsPros))
+            return np.array(predicts)
 
     def _pdf(self,iClass,sample):
         mean = self.mean[iClass]
