@@ -1,34 +1,106 @@
 Execução Iterações Naive Iris.
 
-ACC: 0.9
+ACC: 0.9333333333333333
 Confusion Matrix: 
- [[ 8  0  0]
- [ 0  7  2]
- [ 0  1 12]] 
+ [[12  0  0]
+ [ 0  6  2]
+ [ 0  0 10]] 
 
-ACC: 0.9
+ACC: 0.9666666666666667
+Confusion Matrix: 
+ [[14  0  0]
+ [ 0  7  1]
+ [ 0  0  8]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[11  0  0]
+ [ 0  7  0]
+ [ 0  0 12]] 
+
+ACC: 0.9666666666666667
 Confusion Matrix: 
  [[ 9  0  0]
- [ 0 11  1]
- [ 0  2  7]] 
+ [ 0 13  0]
+ [ 0  1  7]] 
+
+ACC: 0.9333333333333333
+Confusion Matrix: 
+ [[ 8  0  0]
+ [ 0  9  1]
+ [ 0  1 11]] 
+
+ACC: 0.9333333333333333
+Confusion Matrix: 
+ [[ 8  0  0]
+ [ 0 10  1]
+ [ 0  1 10]] 
+
+ACC: 0.9333333333333333
+Confusion Matrix: 
+ [[ 9  0  0]
+ [ 0  7  1]
+ [ 0  1 12]] 
+
+ACC: 0.9666666666666667
+Confusion Matrix: 
+ [[11  0  0]
+ [ 0  9  0]
+ [ 0  1  9]] 
+
+ACC: 0.9666666666666667
+Confusion Matrix: 
+ [[12  0  0]
+ [ 0  9  1]
+ [ 0  0  8]] 
 
 ACC: 0.9666666666666667
 Confusion Matrix: 
  [[10  0  0]
- [ 0 11  0]
- [ 0  1  8]] 
-
-ACC: 0.9666666666666667
-Confusion Matrix: 
- [[ 7  0  0]
- [ 0 12  1]
- [ 0  0 10]] 
+ [ 0 10  0]
+ [ 0  1  9]] 
 
 ACC: 0.9333333333333333
 Confusion Matrix: 
- [[ 7  0  0]
- [ 0 13  1]
- [ 0  1  8]] 
+ [[ 9  0  0]
+ [ 0 14  1]
+ [ 0  1  5]] 
+
+ACC: 0.9666666666666667
+Confusion Matrix: 
+ [[10  0  0]
+ [ 0  7  1]
+ [ 0  0 12]] 
+
+ACC: 0.8666666666666667
+Confusion Matrix: 
+ [[ 5  0  0]
+ [ 0 14  1]
+ [ 0  3  7]] 
+
+ACC: 0.9333333333333333
+Confusion Matrix: 
+ [[ 8  0  0]
+ [ 0  7  1]
+ [ 0  1 13]] 
+
+ACC: 0.9666666666666667
+Confusion Matrix: 
+ [[11  0  0]
+ [ 0  5  0]
+ [ 0  1 13]] 
+
+ACC: 0.9333333333333333
+Confusion Matrix: 
+ [[11  0  0]
+ [ 0  6  2]
+ [ 0  0 11]] 
+
+ACC: 0.9666666666666667
+Confusion Matrix: 
+ [[13  0  0]
+ [ 0  6  0]
+ [ 0  1 10]] 
 
 ACC: 1.0
 Confusion Matrix: 
@@ -36,3 +108,17 @@ Confusion Matrix:
  [ 0 10  0]
  [ 0  0  9]] 
 
+ACC: 0.9666666666666667
+Confusion Matrix: 
+ [[10  0  0]
+ [ 0  8  0]
+ [ 0  1 11]] 
+
+ACC: 0.9666666666666667
+Confusion Matrix: 
+ [[ 8  0  0]
+ [ 0 10  0]
+ [ 0  1 11]] 
+
+
+Acurácia média das 20 iterações: 0.95 ± 0.03

@@ -1,0 +1,117 @@
+Execução Iterações Naive Artificial.
+
+ACC: 1.0
+Confusion Matrix: 
+ [[2 0 0]
+ [0 1 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[0 0 0]
+ [0 1 0]
+ [0 0 3]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[2 0 0]
+ [0 1 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[3 0]
+ [0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[3 0 0]
+ [0 0 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[0 0 0]
+ [0 3 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[1 0 0]
+ [0 0 0]
+ [0 0 3]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[0 0 0]
+ [0 1 0]
+ [0 0 3]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[4]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[1 0 0]
+ [0 2 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[1 0 0]
+ [0 1 0]
+ [0 0 2]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[2 0 0]
+ [0 1 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[1 0 0]
+ [0 2 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[4]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[2 0]
+ [0 2]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[2 0]
+ [0 2]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[0 0 0]
+ [0 0 0]
+ [0 0 4]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[1 0 0]
+ [0 2 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[2 0 0]
+ [0 1 0]
+ [0 0 1]] 
+
+ACC: 1.0
+Confusion Matrix: 
+ [[0 0 0]
+ [0 2 0]
+ [0 0 2]] 
+
+
+Acurácia média das 20 iterações: 1.00 ± 0.00
