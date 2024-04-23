@@ -119,7 +119,7 @@ def NayveBayesRuns(base):
     fileName = "DadosRuns/NaiveRuns_{}.txt".format(convertDocName[base])
     with open(fileName, 'w') as arquivo:
         arquivo.write("Execução Iterações Naive {}.\n\n".format(convertDocName[base]))
-        for i in range(20):
+        for i in range(21):
             print('\nIteração {}\n'.format(i))
             xtrain, ytrain, xtest, ytest = datasetSplitTrainTest(x, y, 80,'Naive Bayes Gaussian',convertDocName[base])
             model = NaiveBayesClassifier()
