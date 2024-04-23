@@ -1,8 +1,8 @@
 import numpy as np
-from plotGaussian import plotGaussianDistribution3d
+from plotGaussian import plotGaussianDistribution3d, dispersionDataBlindClass,dispersionDataByClass
 
 class NaiveBayesClassifier:
-    def fit(self, xtrain, ytrain,baseName,runTrain,iteration):
+    def fit(self, xtrain, ytrain,baseName,isruningTrain,iteration):
         xtrain = np.array(xtrain)
         nSamples,nFeatures = xtrain.shape
         self.classes = np.unique(ytrain)
@@ -14,8 +14,11 @@ class NaiveBayesClassifier:
         self.priorProb = []
         self.covariance = []
 
+
+
         for _class,c in enumerate(self.classes):
             _classSamples = xtrain[ytrain==c]
+            dispersionDataByClass(_classSamples, baseName, iteration,c)
             self.mean.append(np.mean(_classSamples,axis=0))
             self.variance.append(np.var(_classSamples,axis=0))
             self.priorProb.append(_classSamples.shape[0]/nSamples)
@@ -25,13 +28,15 @@ class NaiveBayesClassifier:
         self.priorProb=np.array(self.priorProb)
         self.covariance = np.array(self.covariance)
 
-        if(runTrain):
+        if(isruningTrain):
+            dispersionDataBlindClass(xtrain, baseName,iteration, True)
             plotGaussianDistribution3d(baseName, iteration,self.mean, self.covariance, self.classes, featureIndices=(1, 2))
             fileName = "DadosGaussiana/Dados_Plotagem_Gaussiana{}_base_{}_iteracao_{}.txt".format(baseName,baseName,iteration)
             with open(fileName, 'w') as arquivo:
                 arquivo.write("Dados de Treino.\n\n{}\n".format(xtrain))
 
     def predict(self,xtest,baseName,iteration):
+        dispersionDataBlindClass(xtest, baseName, iteration,False)
         fileName = "DadosGaussiana/Dados_Plotagem_Gaussiana{}_base_{}_iteracao_{}.txt".format(baseName,baseName,iteration)
         with open(fileName, 'a') as arquivo:
             arquivo.write("Dados de Teste.\n\n{}\n".format(xtest))

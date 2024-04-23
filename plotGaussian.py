@@ -75,3 +75,127 @@ def plotGaussianDistribution3d(baseName,iteration,means, covariances, classes, f
             plt.savefig('Resultados_Naive/{}/Gaussiana_Base_{}_features_{}_classe_{}_iteracao_{}.png'.format(baseName,baseName,ind,i,iteration))
 
         # plt.show()
+
+def dispersionDataByClass(data, datasetName,iteration,classIndex):
+    atributesCombinationArtificial = [
+        [0, 1]
+    ]
+    atributesCombinationIris = [
+        [0, 1],
+        [0, 2],
+        [0, 3],
+        [1, 2],
+        [1, 3],
+        [2, 3]
+    ]
+    atributesCombinationFree = [
+        [0, 1],
+        [0, 4],
+        [0, 5],
+        [2, 3],
+        [3, 4],
+        [4, 5]
+    ]
+    color_map = {
+        0: "red",  # Vermelho
+        1: "blue",  # Azul
+        2: "green",  # Verde
+        3: "yellow",  # Amarelo
+        4: "purple",  # Roxo
+        5: "orange",  # Laranja
+        6: "black"  # Preto
+    }
+    if datasetName == 'Iris':
+        atributesCombination = atributesCombinationIris
+    elif datasetName == 'Artificial':
+        atributesCombination = atributesCombinationArtificial
+    else:
+        atributesCombination = atributesCombinationFree
+
+    # Determina o número de linhas e colunas para os subplots
+    num_plots = len(atributesCombination)
+    cols = 3  # Máximo de 3 gráficos por linha
+    rows = (num_plots + cols - 1) // cols  # Calcula o número necessário de linhas
+
+    fig, axs = plt.subplots(rows, cols, figsize=(5 * cols, 4 * rows))
+    axs = axs.ravel()  # Transforma o array multidimensional em 1D para facilitar o acesso
+
+
+
+    for i, (idx1, idx2) in enumerate(atributesCombination):
+        x = [row[idx1] for row in data]
+        y = [row[idx2] for row in data]
+        axs[i].scatter(x, y,color=color_map[classIndex])
+        axs[i].set_xlabel(f'Atributo {idx1}')
+        axs[i].set_ylabel(f'Atributo {idx2}')
+        axs[i].set_title(f'Atributo {idx1} e Atributo {idx2}')
+
+    # Esconder subplots extras que não estão em uso
+    for j in range(i + 1, rows * cols):
+        fig.delaxes(axs[j])
+
+    fig.suptitle('Base {}, iteração {}'.format(datasetName, iteration))
+
+    plt.tight_layout()
+
+    plt.savefig('Resultados_Naive/{}/Grafico_dispersao_Dados_Treino_Base_{}_iteracao_{}_classe_{}'.format(datasetName,datasetName, iteration,classIndex))
+
+
+def dispersionDataBlindClass(data, datasetName,iteration,isTrainingData):
+    atributesCombinationArtificial = [
+        [0, 1]
+    ]
+    atributesCombinationIris = [
+        [0, 1],
+        [0, 2],
+        [0, 3],
+        [1, 2],
+        [1, 3],
+        [2, 3]
+    ]
+    atributesCombinationFree = [
+        [0, 1],
+        [0, 4],
+        [0, 5],
+        [2, 3],
+        [3, 4],
+        [4, 5]
+    ]
+    if datasetName == 'Iris':
+        atributesCombination = atributesCombinationIris
+    elif datasetName == 'Artificial':
+        atributesCombination = atributesCombinationArtificial
+    else:
+        atributesCombination = atributesCombinationFree
+
+    # Determina o número de linhas e colunas para os subplots
+    num_plots = len(atributesCombination)
+    cols = 3  # Máximo de 3 gráficos por linha
+    rows = (num_plots + cols - 1) // cols  # Calcula o número necessário de linhas
+
+    fig, axs = plt.subplots(rows, cols, figsize=(5 * cols, 4 * rows))
+    axs = axs.ravel()  # Transforma o array multidimensional em 1D para facilitar o acesso
+
+
+
+    for i, (idx1, idx2) in enumerate(atributesCombination):
+        x = [row[idx1] for row in data]
+        y = [row[idx2] for row in data]
+        axs[i].scatter(x, y)
+        axs[i].set_xlabel(f'Atributo {idx1}')
+        axs[i].set_ylabel(f'Atributo {idx2}')
+        axs[i].set_title(f'Atributo {idx1} e Atributo {idx2}')
+
+    # Esconder subplots extras que não estão em uso
+    for j in range(i + 1, rows * cols):
+        fig.delaxes(axs[j])
+
+    fig.suptitle('Base {}, iteração {}'.format(datasetName,iteration ))
+
+    plt.tight_layout()
+    if(isTrainingData):
+        plt.savefig('Resultados_Naive/{}/Grafico_dispersao_Dados_Treino_Base_{}_iteracao_{}'.format(datasetName,datasetName, iteration))
+    else:
+        plt.savefig(
+            'Resultados_Naive/{}/Grafico_dispersao_Dados_Teste_Base_{}_iteracao_{}'.format(datasetName, datasetName,iteration))
+    # plt.show()
