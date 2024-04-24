@@ -17,7 +17,7 @@ def plotGaussianDistribution(means, covariances, classes, featureIndices=(0, 1),
         covariance = covariances[i][[f1, f2], [f1, f2]]
         rv = multivariate_normal(mean, covariance)
         ax.contourf(x, y, rv.pdf(pos), levels=100, cmap='Blues', alpha=0.5)
-        ax.set_title(f'Multivariate Gaussian Distribution - Features {f1} and {f2}')
+        ax.set_title(f'Gaussian Distribution - Features {f1} and {f2}')
         ax.set_xlabel(f'Feature {f1}')
         ax.set_ylabel(f'Feature {f2}')
 
@@ -68,7 +68,7 @@ def plotGaussianDistribution3d(baseName,iteration,means, covariances, classes, f
             z = rv.pdf(pos)
 
             ax.plot_surface(x, y, z, cmap='cividis', edgecolor='none', alpha=0.5)
-            ax.set_title(f'Multivariate Gaussian Distribution - Features {f1} and {f2} base {baseName}')
+            ax.set_title(f'Gaussian Distribution - Features {f1} and {f2} base {baseName}')
             ax.set_xlabel(f'Feature {f1}')
             ax.set_ylabel(f'Feature {f2}')
             ax.set_zlabel('Probability')
